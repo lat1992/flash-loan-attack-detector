@@ -1,0 +1,22 @@
+{
+  "name": "nefture-flash-loan-attack-detector",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "serve": "ts-node src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "express": "^4.21.1",
+    "install": "^0.13.0",
+    "npm": "^10.9.1"
+  }
+}
