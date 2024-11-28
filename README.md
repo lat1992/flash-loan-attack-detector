@@ -94,4 +94,4 @@ The service detects flash loan attacks by:
 
 ## Dataset
 
-modify the dataset.ts file if needed, it store the valid
+modify the dataset.ts file if needed, it store the valid txs for test.
