@@ -5,6 +5,7 @@ export interface Attack {
   attackerAddress: string;
   victimAddress: string;
   amountLost: number;
+  token: string;
   amountLostInDollars: number;
   severity: string;
 }

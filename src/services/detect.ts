@@ -1,7 +1,8 @@
 import { ethers } from "ethers";
-import { priceService } from "./price";
 import { Attack, ExploitInfo } from "../types";
 import { ERC20_ABI } from "../constants/abis";
+import { priceService } from "./price";
+import { metricsService } from "./metrics";
 
 export class DetectService {
   private provider: ethers.JsonRpcProvider;
@@ -51,6 +52,7 @@ export class DetectService {
               if (price !== 0) {
                 amountLostInDollars = amountLost * Number(price);
               }
+              metricsService.verifyDetection(tx.hash);
 
               attacks.push({
                 txHash: tx.hash,
@@ -59,9 +61,12 @@ export class DetectService {
                 attackerAddress: receipt.from,
                 victimAddress: victim,
                 amountLost: amountLost,
+                token: targetToken,
                 amountLostInDollars: amountLostInDollars,
                 severity: amountLostInDollars > 1000000 ? "HIGH" : "MEDIUM",
               });
+            } else {
+              metricsService.verifyFalseNegativeDetection(tx.hash);
             }
           });
       }
