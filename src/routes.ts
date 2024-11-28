@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import { detectExploit } from "./detect";
+import { detectService } from "./services/detect";
 
 const router = Router();
 const cacheMap = new Map<number, any>();
@@ -18,7 +18,7 @@ router.post("/detect", async (req, res) => {
 
   let info: any = cacheMap.get(req.body.blockNumber);
   if (info === undefined) {
-    info = await detectExploit(req.body.blockNumber);
+    info = await detectService.detectExploit(req.body.blockNumber);
     cacheMap.set(req.body.blockNumber, info);
   }
   res.send(info);

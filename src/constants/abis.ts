@@ -1,6 +1,4 @@
-import { ethers } from "ethers";
-
-const feedRegistryInterfaceABI = [
+export const FEED_REGISTRY_INTERFACE_ABI = [
   {
     anonymous: false,
     inputs: [
@@ -497,48 +495,4 @@ const feedRegistryInterfaceABI = [
   },
 ];
 
-const USD = "0x0000000000000000000000000000000000000348";
-const chainlinkAddr = "0x47Fb2585D2C56Fe188D0E6ec628a38b74fCeeeDf";
-
-async function getPrice(
-  provider: ethers.JsonRpcProvider,
-  amount: string,
-  tokenAddress: string,
-  blockNumber: number,
-): Promise<number> {
-  // use chainlink to get price
-  const feedRegistry = new ethers.Contract(
-    chainlinkAddr,
-    feedRegistryInterfaceABI,
-    provider,
-  );
-  // convert wbtc to btc
-  if (tokenAddress === "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599") {
-    tokenAddress = "0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB";
-  } else if (
-    // convert weth / steth to eth
-    tokenAddress === "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0" ||
-    tokenAddress === "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
-  ) {
-    tokenAddress = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
-  }
-  let bigPrice: bigint = 0n;
-  try {
-    let roundData = await feedRegistry.latestRoundData(tokenAddress, USD, {
-      blockTag: blockNumber,
-    });
-    bigPrice = roundData[1];
-  } catch (e) {
-    return 0;
-  }
-  let price: number = 0;
-  try {
-    let decimals = await feedRegistry.decimals(tokenAddress, USD);
-    price = Number(ethers.formatUnits(bigPrice, decimals));
-  } catch (e) {
-    return 0;
-  }
-  return price;
-}
-
-export { getPrice };
+export const ERC20_ABI = ["function decimals() view returns (uint8)"];

@@ -85,3 +85,7 @@ The service detects flash loan attacks by:
 ## Limitations
 
 - Price data might not be available for all tokens
+
+## Tools
+- ethers.js: web3 evm library, I have experience on it, it also the default web3 library of hardhat.
+- Infura: mainnet rpc that I used, ~4k request per second, enough for developping.
